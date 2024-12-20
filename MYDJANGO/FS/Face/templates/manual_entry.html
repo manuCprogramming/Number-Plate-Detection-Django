@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html ng-app="licenseApp">
+<head>
+    <title>Manual Entry</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top:200px; 
+        }
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], input[type="file"] {
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+        .buttons button.initial {
+            background-color: red;
+        }
+        .buttons button.valid {
+            background-color: green;
+        }
+        .buttons button:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .errorMessage {
+            color: red;
+            text-align: center;
+        }
+    </style>
+    <script>
+        var app = angular.module('licenseApp', []);
+        app.config(['$httpProvider', function($httpProvider) {
+            $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+            $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+        }]);
+        app.controller('formCtrl', ['$scope', '$http', function($scope, $http) {
+            $scope.plate = {};
+            $scope.errorMessage = "";
+            $scope.submitDisabled = true;
+
+            $scope.validateForm = function() {
+                if (!$scope.plate.plate_number || !$scope.plate.name || !$scope.plate.rc_number || !$scope.plate.place || !$scope.plate.age || !$scope.plate.vehicle_type || !$scope.plate.vehicle_name || !$scope.plate.mobile_number || !$scope.plate.aadhar_number) {
+                    $scope.errorMessage = "All fields are required";
+                    $scope.submitDisabled = true;
+                    return false;
+                }
+                $scope.errorMessage = "";
+                $scope.submitDisabled = false;
+                return true;
+            };
+
+            $scope.saveForm = function() {
+                if ($scope.validateForm()) {
+                    var formData = new FormData();
+                    for (var key in $scope.plate) {
+                        formData.append(key, $scope.plate[key]);
+                    }
+                    var fileInput = document.getElementById('image');
+                    if (fileInput.files.length > 0) {
+                        formData.append('image', fileInput.files[0]);
+                    }
+
+                    // Use the correct URL template tag
+                    $http.post("{% url 'save_plate_info' %}", formData, {
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}
+                    }).then(function(response) {
+                        $scope.plate = response.data.plate;
+                        window.location.href = "{% url 'home' %}";  // Redirect to home page after successful submission
+                    }, function(error) {
+                        console.error('Error submitting form', error);
+                    });
+                }
+            };
+
+            $scope.onMouseEnter = function() {
+                if ($scope.submitDisabled) {
+                    var button = document.getElementById('submitButton');
+                    var newX = Math.random() * (window.innerWidth - button.offsetWidth);
+                    var newY = Math.random() * (window.innerHeight - button.offsetHeight);
+                    button.style.transform = 'translate(' + newX + 'px, ' + newY + 'px)';
+                }
+            };
+        }]);
+    </script>
+</head>
+<body ng-controller="formCtrl">
+    <div class="container">
+        <h1>Enter License Information</h1>
+        <form name="licenseForm" ng-submit="saveForm()" novalidate>
+            <label for="plate_number">Plate Number:</label>
+            <input type="text" id="plate_number" name="plate_number" ng-model="plate.plate_number" ng-blur="validateForm()" required>
+            <span class="error" ng-show="licenseForm.plate_number.$touched && licenseForm.plate_number.$invalid">Plate number is required.</span>
+            
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" ng-model="plate.name" ng-blur="validateForm()" required>
+            <span class="error" ng-show="licenseForm.name.$touched && licenseForm.name.$invalid">Name is required.</span>
+            
+            <label for="rc_number">RC Number:</label>
+            <input type="text" id="rc_number" name="rc_number" ng-model="plate.rc_number" ng-blur="validateForm()" required>
+            <span class="error" ng-show="licenseForm.rc_number.$touched && licenseForm.rc_number.$invalid">RC number is required.</span>
+            
+            <label for="place">Place:</label>
+            <input type="text" id="place" name="place" ng-model="plate.place" ng-blur="validateForm()" required>
+            <span class="error" ng-show="licenseForm.place.$touched && licenseForm.place.$invalid">Place is required.</span>
+            
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" ng-model="plate.age" ng-blur="validateForm()" required>
+            <span class="error" ng-show="licenseForm.age.$touched && licenseForm.age.$invalid">Age is required.</span>
+            
+            <label for="vehicle_type">Vehicle Type:</label>
+            <input type="text" id="vehicle_type" name="vehicle_type" ng-model="plate.vehicle_type" ng-blur="validateForm()" required>
+            <span class="error" ng-show="licenseForm.vehicle_type.$touched && licenseForm.vehicle_type.$invalid">Vehicle type is required.</span>
+            
+            <label for="vehicle_name">Vehicle Name:</label>
+            <input type="text" id="vehicle_name" name="vehicle_name" ng-model="plate.vehicle_name" ng-blur="validateForm()" required>
+            <span class="error" ng-show="licenseForm.vehicle_name.$touched && licenseForm.vehicle_name.$invalid">Vehicle name is required.</span>
+            
+            <label for="mobile_number">Mobile Number:</label>
+            <input type="text" id="mobile_number" name="mobile_number" ng-model="plate.mobile_number" ng-blur="validateForm()" required>
+            <span class="error" ng-show="licenseForm.mobile_number.$touched && licenseForm.mobile_number.$invalid">Mobile number is required.</span>
+            
+            <label for="aadhar_number">Aadhar Number:</label>
+            <input type="text" id="aadhar_number" name="aadhar_number" ng-model="plate.aadhar_number" ng-blur="validateForm()" required>
+            <span class="error" ng-show="licenseForm.aadhar_number.$touched && licenseForm.aadhar_number.$invalid">Aadhar number is required.</span>
+            
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image">
+            
+            <div class="buttons">
+                <button id="submitButton" type="submit" ng-mouseenter="onMouseEnter()" ng-class="{'initial': submitDisabled, 'valid': !submitDisabled}">Submit</button>
+            </div>
+            <p ng-show="errorMessage" class="errorMessage">{{ errorMessage }}</p>
+        </form>
+    </div>
+</body>
+</html>

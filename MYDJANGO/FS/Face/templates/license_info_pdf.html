@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Information</title>
+    <style>
+        /* Add your CSS styles for PDF rendering here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .info {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>License Information</h1>
+        </div>
+        <div class="info">
+            <p><strong>Name:</strong> {{ license_info.name }}</p>
+            <p><strong>RC Number:</strong> {{ license_info.rc_number }}</p>
+            <p><strong>Place:</strong> {{ license_info.place }}</p>
+            <p><strong>Age:</strong> {{ license_info.age }}</p>
+            <!-- Add more fields as per your LicensePlate model -->
+        </div>
+        <div class="footer">
+            <p>&copy; Copyright preserved by Govt. Karnataka</p>
+        </div>
+    </div>
+</body>
+</html>

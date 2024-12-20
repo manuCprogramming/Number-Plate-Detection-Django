@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html ng-app="licenseApp">
+<head>
+    <title>License Info</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 2px solid #06213c;
+            border-radius: 10px;
+            padding: 20px;
+            width: 50%;
+            max-width: 600px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .container h2 {
+            color: #1e90ff;
+            font-size: 2em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .container p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+        .container img {
+            margin: 20px 0;
+            border: 2px solid #040e17;
+            border-radius: 5px;
+            width: 200px;
+            height: auto;
+        }
+        .buttons {
+            margin: 20px 0;
+        }
+        .buttons button {
+            background-color: #4f5f6e;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.1em;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .buttons button:hover {
+            background-color: #07315c83;
+            transform: scale(1.05);
+        }
+        .buttons button:active {
+            transform: scale(1);
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="color: darkgoldenrod;">LICENSE INFROMATION</h2>
+        <p>Plate Number: {{ plate.plate_number }}</p>
+        <p>Name: {{ plate.name }}</p>
+        <p>RC Number: {{ plate.rc_number }}</p>
+        <p>Place: {{ plate.place }}</p>
+        <p>Age: {{ plate.age }}</p>
+        <p>Vehicle Type: {{ plate.vehicle_type }}</p>
+        <p>Vehicle Name: {{ plate.vehicle_name }}</p>
+        <p>Mobile Number: {{ plate.mobile_number }}</p>
+        <p>Aadhar Number: {{ plate.aadhar_number }}</p>
+        <p>Image:</p>
+        <img ng-if="plate.image" ng-src="{{ plate.image }}" alt="User Image">
+        <div class="buttons">
+            <button onclick="window.print()">Print</button>
+            <button onclick="saveAsPDF('{{ plate.plate_number }}')">Save as PDF</button>
+        </div>
+        <div class="footer">
+            All rights reserved by Manu or Karnataka
+        </div>
+    </div>
+</body>
+</html>

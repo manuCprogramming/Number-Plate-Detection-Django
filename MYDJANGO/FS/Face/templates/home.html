@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Plate Registration</title>
+    {% load static %}
+    <style>
+        body {
+            background-image: url("https://etimg.etb2bimg.com/photo/106681073.cms");
+            background-size: cover;
+            background-position: center;
+        }
+        .center {
+            text-align: center;
+            margin-top: 20%;
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .orange-button {
+            background-color: orange;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="center">
+        <h1 style="color: white;">LICENSE REGISTRATION</h1>
+        <div class="form-container">
+            <form action="{% url 'validate_plate' %}" method="post">
+                {% csrf_token %}
+                <label for="plate_number">Enter License Plate Number:</label><br>
+                <input type="text" id="plate_number" name="plate_number" placeholder="ABC1234"><br><br>
+                <button class="orange-button" type="submit">Submit Manually</button>
+            </form>
+            <p>OR</p>
+            <form action="{% url 'open_webcam' %}" method="post">
+                {% csrf_token %}
+                <button  class="orange-button" class="button" type="submit">Open Web Camera</button>
+            </form>
+            
+        </div>
+    </div>
+</body>
+</html>

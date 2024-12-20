@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .profile-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+        .profile-card:hover {
+            transform: scale(1.05);
+        }
+        .profile-img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+        .profile-info {
+            text-align: center;
+        }
+        .profile-name {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .profile-role {
+            color: #555;
+        }
+        .profile-links a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .profile-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>About Us</h1>
+        <div class="profile-card">
+            <img src="images/profile1.jpg" alt="Profile 1" class="profile-img">
+            <div class="profile-info">
+                <div class="profile-name">John Doe</div>
+                <div class="profile-role">CEO</div>
+                <div class="profile-links">
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <div class="profile-card">
+            <img src="images/profile2.jpg" alt="Profile 2" class="profile-img">
+            <div class="profile-info">
+                <div class="profile-name">Jane Smith</div>
+                <div class="profile-role">CTO</div>
+                <div class="profile-links">
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+        <!-- Add additional profile cards here -->
+    </div>
+</body>
+</html>
